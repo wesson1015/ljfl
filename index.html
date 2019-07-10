@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<title>首页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+	<link rel="stylesheet" href="fonts/iconfont.css"/>
+    <link rel="stylesheet" href="css/font.css"/>
+	<link rel="stylesheet" type="text/css" href="css/indexstyle.css">
+	<link rel="stylesheet" href="css/mui.min.css"/>
+	<link rel="stylesheet" href="css/dibu.css"/>
+    <script src="js/jquery-1.8.3.min.js"></script>
+		<style>
+			.mui-popover {
+				height: 300px;
+			}
+		</style>
+</head>
+<body>
+		<div class="top" style="border-bottom:2px solid #208002;">
+		   <!-- <img width="54px" height="53px" src="img/logo.png"  style="position: absolute; left:45%;" > -->
+		   <div style="float:right;margin-right:10px;" id="denglu"><a href="login.html">登陆</a></div>
+		</div>
+		<div class="swiper-container">
+                <div class="swiper-wrapper" style="position:relative;">
+                    <div class="swiper-slide" style="width:100%;">
+					  <img src="img/bg.png"></img>
+					  
+					</div>
+                </div>
+        </div>
+        <!-- banner图结束 -->
+		<div id="ccc"></div>
+<!--        <div class="prospecl">
+            <div class="title"><img src="img/khs.png"  style="width: 20px;height: 20px;">&nbsp;&nbsp;可回收垃圾</div>
+            <ul class="protips">
+                <li id="product"><a href="javascript:;"><span>废纸</span></a></li>
+                <li><a href="exam_list.html"><span>塑料</span></a></li>
+                <li><a href="exam_list.html"><span>玻璃</span></a></li>
+                <li><a href="exam_list.html"><span>金属</span></a></li>
+                <li><a href="exam_list.html"><span>布料</span></a></li>
+            </ul>
+        </div>
+        <div class="prospecl">
+            <div class="title"><img src="img/glj.png" width="20" height="20">&nbsp;&nbsp;其他(干垃圾)</div>
+            <ul class="protips">
+                <li><a href="exam_list.html"><span>陶瓷</span></a></li>
+                <li><a href="exam_list.html"><span>渣土</span></a></li>
+				<li><a href="exam_list.html"><span>纸巾</span></a></li>
+				<li><a href="exam_list.html"><span>果壳</span></a></li>
+				<li><a href="exam_list.html"><span>尘土</span></a></li>
+				<li><a href="exam_list.html"><span>食品袋（盒）</span></a></li>
+				<li><a href="exam_list.html"><span>卫生间废纸</span></a></li>
+            </ul>
+        </div>
+		 <div class="prospecl">
+            <div class="title"><img src="img/slj.png" width="20" height="20">&nbsp;&nbsp;厨余(湿垃圾)</div>
+            <ul class="protips">
+                <li><a href="exam_list.html"><span>剩菜剩饭</span></a></li>
+                <li><a href="exam_list.html"><span>骨头</span></a></li>
+				<li><a href="exam_list.html"><span>菜根菜叶</span></a></li>
+				<li><a href="exam_list.html"><span>果皮等</span></a></li>
+            </ul>
+        </div>
+		 <div class="prospecl">
+            <div class="title"><img src="img/yh.png" width="20" height="20">&nbsp;&nbsp;有害垃圾</div>
+            <ul class="protips">
+                <li><a href="exam_list.html"><span>电池</span></a></li>
+                <li><a href="exam_list.html"><span>荧光灯管</span></a></li>
+				<li><a href="exam_list.html"><span>水银温度计</span></a></li>
+				<li><a href="exam_list.html"><span>油漆桶</span></a></li>
+				<li><a href="exam_list.html"><span>部分家电</span></a></li>
+				<li><a href="exam_list.html"><span>过期药品</span></a></li>
+				<li><a href="exam_list.html"><span>过期化妆品</span></a></li>
+            </ul>
+        </div> -->
+        <div class="bottom">
+            <p>
+                Copyright&nbsp;©&nbsp;2019 <a href="javascript:" title="力威网络科技有限公司">力威网络科技有限公司</a> &nbsp;&nbsp;版权所有
+            </p>
+        </div>
+		
+		<!-- footer star -->
+		<footer class="page-footer fixed-footer" style="display:block;" id="footer1">
+			<ul>
+			<li class="active" style="height: 50px; line-height: 50px;">
+				<img src="img/jihuo.png" class="jihuo" id="yuyin" style="width: 30px; height: 30px; margin-top: 10px;"></img>
+			<!-- <i id="yuyin" class="iconfont" style="font-size:20px;color:#666666; ">&#xe635;</i> -->
+			</li>
+			<li  class="active1">
+					<p><input type="text" id="sousuo" placeholder="输入要搜索的垃圾名称" style="width: 220px; height: 17px;"/></p>
+			</li>
+			<li class="active2" >
+					<p><button type="button" id="sousuobut">搜索</button></p>
+			</li>
+			</ul>
+		</footer>
+		<footer class="page-footer fixed-footer" style="display:none;" id="footer2">
+					<ul>
+						<li class="active" style="height: 50px; line-height: 50px;">
+						<i id="jianpan" class="iconfont" style="font-size:20px;color:#666666; ">&#xe60b;</i>
+						</li>
+						<li  class="active1">
+							
+						<p><button ttype="submit" id="luyin"  style=" width: 300px; height: 35px; " />按住说话</p>
+						</li>
+					<ul>
+				</footer>
+
+<!-- 右侧菜单 -->
+<script src="js/mui.min.js"></script>
+<script src="js/castapp.js"></script>
+<script type="text/javascript">
+    ca.init();
+	localStorage.setItem('request_url','http://gb.zhushouer.com/');
+	var request_url=localStorage.getItem('request_url');
+	console.log(request_url)
+	
+	ca.receiveNotice('update',function(){	//获取退出登陆后的通知
+		zhuangtai();
+	})
+	zhuangtai()
+	function zhuangtai(){
+	var denglu=ca.id('denglu');
+	if(!localStorage.getItem('token')){
+		denglu.innerHTML='<span id="login"><a href="javascript:;">登陆</a></span>';
+		ca.id('login').addEventListener('tap',function(){
+			ca.newInterface({
+				url:'login.html',
+				id:'login'
+			})
+		})
+	}else{
+		var token=localStorage.getItem('token');
+		var username=localStorage.getItem('username');
+		console.log(token);
+		console.log(username);
+		ca.post({
+			url:request_url+'api/v1/tokenyz',
+			data:{
+				token:token,
+				username:username
+			},
+			succFn:function(data){
+				var json = JSON.parse(data)
+				if(json.state<0){
+					ca.prompt('登陆已超时,请重新登陆')
+					localStorage.removeItem('token');
+					localStorage.removeItem('username');
+					ca.newInterface({
+						url:'login.html'
+					})
+				}
+			}
+		})
+		denglu.innerHTML='<span id="userlist"><a href="javascript:;">会员中心</a></span>';
+		ca.id('userlist').addEventListener('tap',function(){
+			ca.newInterface({
+				url:'center.html',
+				id:'center'
+			})
+		})
+	}
+	}
+   
+   
+   //列表信息
+   
+   var product=ca.id('product');
+   var ccc=ca.id('ccc');
+   ca.get({
+	   url:request_url+'api/v1/categoryall',
+	   data:{},
+	   succFn:function(data){
+		   
+		   var json=JSON.parse(data);
+		   //console.log(json[0].categoryall[0].name);
+		   for(var a in json){
+			   
+			   var tmpl=' <div class="prospecl" id="prospeclaa" >'
+							+'<div class="title" id="protips" iid="'+json[a].id+'"><img src="'+json[a].img+'"  style="width: 20px;height: 20px;">&nbsp;&nbsp;'+json[a].name+'</div>'
+							+'<ul class="protips">'
+							+'<li id="product"><a href="javascript:;"><span>aa</span></a></li>'
+							+'</ul>'
+						+'</div>'
+						
+						ccc.innerHTML += tmpl;
+						
+						
+						
+						////  展开列表
+						// $(document).ready(function(){
+						// 	$(".prospecl ul").hide();
+						// 	$(".prospecl .title").click(function(){
+						// 		
+						// 		if ($(this).next().css('display') == "none") {
+						//         //展开未展开
+						//            $('.prospecl').children('ul').slideUp(300);
+						// 		   $(this).next('ul').slideDown();
+						// 		   $(this).parent('.prospecl').children().children("i").html("&#xe607;").siblings('.prospecl').children().children("i").html("&#xe617;");
+						//         }else{
+						//         //收缩已展开
+						// 			$(this).next('ul').slideUp(300);
+						// 			$(this).children("i").html("&#xe617;");
+						//        }
+						// 		return false;
+						// 	});
+						// });
+						// 
+		   }
+		   cid();
+
+		   
+		   
+	   }
+   })
+    
+   function cid(){
+	   mui('.prospecl').on('tap', '.title', function() {
+	   var cart_id = this.getAttribute("iid");
+	   //alert(cart_id);
+	   localStorage.setItem('list_id',cart_id);
+   	   ca.newInterface({
+   		   url:'category_list.html',
+   		   id:'category_list'
+   	   })
+   })
+   
+   // for(var i in json[a].categoryall){
+   // 	+'<li id="product"><a href="javascript:;"><span>'+json[a].categoryall[i].name+'</span></a></li>'
+   // }
+   }
+   
+  
+   var sousuo=ca.id('sousuo')
+   var sousuobut=ca.id('sousuobut')
+   sousuobut.addEventListener('tap',function(){
+	   if(sousuo.value==''){
+		   ca.prompt('请输入要搜索的内容')
+		   return
+	   }
+	   //alert(sousuo.value)
+	   ca.get({
+		   url:request_url+'api/v1/sousuo/'+sousuo.value,
+		   data:{},
+		   succFn:function(data){
+			   console.log(data)
+			    var json = JSON.parse(data)
+			   if(!data){
+				   alert(123)
+			   }else{
+				   console.log(json[0].category_id);
+				   if(json[0].category_id==1){
+					   alert('可回收垃圾')
+				   }
+				   if(json[0].category_id==2){
+					   alert('其他(干垃圾)')
+				   }
+				   if(json[0].category_id==3){
+					   alert('厨余(湿垃圾)')
+				   }
+					if(json[0].category_id==4){
+					   alert('有害垃圾')
+				   }
+			   }
+		   }
+	   })
+   })
+
+  var jianpan=ca.id('jianpan')
+  var footer1=ca.id('footer1')
+  var footer2=ca.id('footer2')
+  var yuyin=ca.id('yuyin')
+  	yuyin.addEventListener('tap',function(){
+  			footer2.style.display='block'
+			footer1.style.display='none'
+  	})
+ 
+  jianpan.addEventListener('tap',function(){
+	  		footer1.style.display='block'
+	  		footer2.style.display='none'				
+  })
+	
+
+</script>
+</body>
+</html>

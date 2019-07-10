@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>找回密码</title>
+        <link rel="stylesheet" href="fonts/iconfont.css"/>
+        <link rel="stylesheet" href="css/font.css"/>
+        <link rel="stylesheet" href="css/mui.css"/>
+        <link rel="stylesheet" href="css/login.css"/>
+		<script src="js/jquery-1.8.3.min.js"></script>
+
+        <link href="css/mobiscroll.2.13.2.css" rel="stylesheet" />
+		<style type="text/css">
+		#company_dummy{color:#999999;}
+		</style>
+        
+    </head>
+    <body>
+        <div class="header">
+            <img src="img/logintitle.png" style="width:100%">
+        </div>
+		<div class="errmsg" id="errmsg"></div>
+        <div class="login-wrap">
+			<div style="text-align: center; font-size: 24px; color: #DA7C0C">找回密码</div>
+            <div class="login-box">
+              
+                    <div class="input-wrap">
+                        <input type="text" name="username" placeholder="手机号" id="username"/>
+						<button class="code" type="button" id="send_code" style="background-color:#006C2E; color: #ffffff;">发送验证码</button>
+                    </div>
+					<div class="input-wrap">
+					    <input type="text" name="vcode" placeholder="验证码" id="vcode">
+						
+					                   
+					</div>
+                    <div class="input-wrap">
+                        <input type="password" name="password" placeholder="新密码" id="password"/>
+                    </div>
+					 <div class="input-wrap">
+                        <input type="password" name="repassword" placeholder="确认密码" id="repassword"/>
+                    </div>
+                    
+                
+            </div>
+			<div class="btns" style="margin-bottom:25px;"></div>
+            <!--<a href="index.html" class="weui_btn login-btn weui_btn_primary">注册</a>-->
+			<button type="button" class="weui_btn login-btn weui_btn_primary" style="width: 100%; border-style: none;" id="zc">注册</button>
+		     
+			  <div class="nologin">已有账号？直接<span id="login"><a href="javascripu:;">登录</a></span></div> 
+			  <div class="contact" id="lxwm"><a href="javascript:;">联系我们</a></div>
+        </div>
+        <div class="footer">
+            Copyright&nbsp;&copy;&nbsp;2019 力威网络科技有限公司&nbsp;
+        </div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/castapp.js"></script>
+		<script>
+			ca.init();
+			var lxwm=ca.id('lxwm');
+			lxwm.addEventListener('tap',function(){
+				ca.newInterface({
+					url:'contact.html',
+					id:'contact'
+				})
+			})
+			var login=ca.id('login');
+			login.addEventListener('tap',function(){
+				mui.back();
+			})
+			var request_url=localStorage.getItem('request_url');
+			
+			var zc = ca.id('zc');
+			var username=ca.id('username');
+			var password=ca.id('password');
+			var repassword=ca.id('repassword');
+			var vcode=ca.id('vcode');
+			var fsyzm=ca.id('fsyzm');
+			var errmsg=ca.id('errmsg');
+			var code='';
+			var re = /^1(3|4|5|6|7|8|9)\d{9}$/; //手机号
+			
+			
+			
+			//发送验证码
+			var send_code=ca.id('send_code');
+			var onoff=true;
+			send_code.addEventListener('tap',function(){
+				if(!onoff){
+					return;
+				}
+				onoff=false;
+				
+				
+				if(username.value==''){
+					username.focus;
+				ca.prompt('手机号不能为空')
+				// 	errmsg.innerHTML='手机号不能为空';
+					onoff=true;
+					return false;			
+				}
+				if(!re.test(username.value)){
+				ca.prompt('手机号输入错误')
+				// 	errmsg.innerHTML='手机号格式错误';
+					onoff=true;
+					return false;	
+				}
+				ca.post({
+					url:request_url+'api/v1/userget',
+					data:{
+						username:username.value,
+					},
+					succFn:function(data){
+						var json = JSON.parse(data)
+						console.log(data)
+						if(json.code==1){
+						ca.prompt('手机号不存在');
+						onoff=true;
+						return;
+						}
+						else{
+							fsyzms()
+						}
+					}
+				})
+				
+				function fsyzms(){
+				
+				var num=60;	//获取时间
+				code=ca.getIdCode(6);//获取验证码
+				var timer = setInterval(function(){
+					
+					num--;
+					if(num == 0){
+						
+						send_code.innerHTML = '发送验证码';
+						send_code.style.color="#FFFFFF"
+						
+						clearInterval(timer)//停止定时器
+						onoff=true;
+					}else{
+					send_code.style.color="#9e9e9e"
+					send_code.innerHTML = num+'S后可重发';
+					
+						
+					}
+				},1000);//1000毫秒
+				
+				ca.post({	//请求发送验证码借口
+					url:request_url+'api/v1/sendcode',
+					data:{
+						username:username.value,
+						code:'您的手机动态码'+code+',请勿向任单位或个人泄露.'
+					},
+					succFn:function(data){
+						if(data!=1){
+							ca.prompt('获取失败-1,请联系管理员')
+							clearInterval(timer)//停止定时器
+							onoff=true;
+						}
+					}
+				})
+				}
+				
+			})
+				
+			
+			//发送验证码
+			
+			
+			
+			zc.addEventListener('tap',function(){
+			//	alert(request_url)
+			if(username.value==''){
+				username.focus;
+			ca.prompt('手机号不能为空')
+			// 	errmsg.innerHTML='手机号不能为空';
+				return false;
+			}
+			
+			if(!re.test(username.value)){
+			ca.prompt('手机号输入错误')
+			// 	errmsg.innerHTML='手机号格式错误';
+				return false;
+			}
+			
+			if(vcode.value==''){
+				vcode.focus;
+			ca.prompt('验证码不能为空')
+			// 	errmsg.innerHTML='手机号不能为空';
+				return false;
+			}
+			if(vcode.value!=code){
+				vcode.focus;
+			ca.prompt('验证码错误'+code)
+			// 	errmsg.innerHTML='手机号不能为空';
+				return false;
+			}
+			if(password.value==''){
+				ca.prompt('密码不能为空')
+			// 	errmsg.innerHTML='密码不能为空';
+				return false;
+			}
+			if(password.value.length <6 || password.value.length >16){
+				ca.prompt('密码长度须大于6位或小于16位')
+			// 	errmsg.innerHTML='密码长度须大于6位或小于16位';
+				return false;
+			}
+			if(repassword.value==''){
+				ca.prompt('确认密码不能为空')
+			// 	errmsg.innerHTML='确认密码不能为空';
+				return false;
+			}
+			if(repassword.value!=password.value){
+				ca.prompt('两次输入密码不一致')
+			// 	errmsg.innerHTML='两次输入密码不一直';
+				return false;
+			}
+			ca.post({
+				url:request_url+'api/v1/zhpassword',
+				data:{
+					username:username.value,
+					password:password.value
+				},
+				succFn:function(data){
+					var json=JSON.parse(data)
+					//console.log(json.code)
+					if(json.code<0){
+						ca.prompt('系统错误,请联系管理员')
+						//errmsg.innerHTML='系统错误,请联系管理员'
+						return
+					}
+					if(json.code==1){
+						ca.prompt('密码找回成功')
+						mui.back();
+					}
+				}
+			})
+			})
+		</script>
+    </body>
+</html>

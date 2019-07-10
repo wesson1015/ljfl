@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>会员中心</title>
+        <link rel="stylesheet" href="fonts/iconfont.css"/>
+        <link rel="stylesheet" href="css/font.css"/>
+        <link rel="stylesheet" href="css/mui.css"/>
+		<link rel="stylesheet" href="css/index.css">
+		<link rel="stylesheet" href="css/login.css"/>
+       
+	   <style type="text/css">
+	     a:link {color:#157b42;}/* 未被访问的链接 */
+		 a:visited{color:#157b42;}/* 已被访问的链接 */
+		 a:hover{color:#157b42;}/* 鼠标指针移动到链接上 */
+		 a:active{color:#157b42;}/* 正在被点击的链接 */
+	   </style>
+    </head>
+    <body>
+        <header>
+            <div class="titlebar reverse" style="border-bottom:1px solid #02662e;">
+               <a class="mui-action-back mui-icon  mui-pull-left">
+                    <i class="iconfont" style="font-size:17px;">&#xe616;</i>
+                </a>
+				<h1>会员中心</h1>
+            </div>
+        </header>
+		<article style="width:100%;padding:0;">
+			<div class="head-box">
+               <h3  id="user"></h3>
+               <div class="head-icon-outer">
+                    <div class="head-icon"></div>
+               </div>
+               <h5></h5>
+			   <div style="clear:both;"></div>
+            </div>
+		</article>
+        <article style="padding-bottom: 24px;padding-top:24px;">
+            
+            <ul class="xunjia-box">
+			   <li class="inner" id="grxx">
+				<div class="item-name">个人信息</div>
+				<div class="item-value">
+				  <i class="iconfont" style="font-size: 18px;">&#xe617;</i>
+				</div>
+			   </li> 
+			   <!-- <li class="inner" id="bdsj">
+			   				<div class="item-name">绑定手机</div>
+			   				<div class="item-value">
+			   				  <i class="iconfont" style="font-size: 18px;">&#xe617;</i>
+			   				</div>
+			   </li> -->
+			   <li class="inner" id="xgmm">
+			   				<div class="item-name">修改密码</div>
+			   				<div class="item-value">
+			   				  <i class="iconfont" style="font-size: 18px;">&#xe617;</i>
+			   				</div>
+			   </li> 
+			   <li class="inner" id="lxwm">
+			   				<div class="item-name">联系我们</div>
+			   				<div class="item-value">
+			   				  <i class="iconfont" style="font-size: 18px;">&#xe617;</i>
+			   				</div>
+			   </li> 
+			   <li class="inner" id="jcbb">
+			   				<div class="item-name">检查版本</div>
+			   				<div class="item-value">
+			   				  <i class="iconfont" style="font-size: 18px;">&#xe617;</i>
+			   				</div>
+			   </li> 
+		    </ul>
+        </article>
+		<button type="button" class="weui_btn login-btn weui_btn_primary" style="width: 95%; border-style: none;" id="logout">退出登陆</button>
+		 <script src="js/mui.min.js"></script>
+		<script src="js/castapp.js"></script>
+		<script type="text/javascript">
+		    ca.init();
+			var request_url=localStorage.getItem('request_url');
+			var user=ca.id('user');
+			if(!localStorage.getItem('token')){
+				ca.newInterface({
+					url:'login.html'
+				})
+			}else{
+				var token=localStorage.getItem('token');
+				var username=localStorage.getItem('username');
+				
+				user.innerHTML=+username;
+				// console.log(token);
+				// console.log(username);
+				ca.post({
+					url:request_url+'api/v1/tokenyz',
+					data:{
+						token:token,
+						username:username
+					},
+					succFn:function(data){
+						var json = JSON.parse(data)
+						if(json.state<0){
+							ca.prompt('登陆已超时,请重新登陆')
+							localStorage.removeItem('token');
+							localStorage.removeItem('username');
+							ca.newInterface({
+								url:'login.html'
+							})
+						}
+					}
+				})
+			}
+			var logout=ca.id('logout');
+			var grxx=ca.id('grxx');
+			var bdsj=ca.id('bdsj');
+			var xgmm=ca.id('xgmm');
+			var lxwm=ca.id('lxwm');
+			var jcbb=ca.id('jcbb');
+			grxx.addEventListener('tap',function(){
+				alert('个人信息');
+			})
+			// bdsj.addEventListener('tap',function(){
+			// 	alert('绑定手机');
+			// })
+			xgmm.addEventListener('tap',function(){
+				ca.newInterface({
+					url:'xgmm.html',
+					id:'xgmm'
+				})
+			})
+			lxwm.addEventListener('tap',function(){
+					ca.newInterface({
+						url:'contact.html',
+						id:'contact'
+					})
+			})
+			jcbb.addEventListener('tap',function(){
+				alert('已是最新版本');
+			})
+			
+			
+			// 退出登陆
+			logout.addEventListener('tap', function() {
+				if (mui.os.ios) {
+					localStorage.removeItem('token');
+					localStorage.removeItem('username');
+					ca.prompt('退出成功');
+					mui.openWindow({
+						url: 'index.html',
+						id: 'index',
+						show: {
+							aniShow: 'pop-in'
+						},
+						waiting: {
+							autoShow: false
+						}
+					});
+					return;
+				}
+				else{
+				var btnArray = [{title: "注销当前账号"}, 
+								{title: "直接关闭应用"}];
+				plus.nativeUI.actionSheet({cancel: "取消",buttons: btnArray}, function(event) {
+					var index = event.index;
+					switch (index) {
+						case 1:
+							//注销账号
+							localStorage.removeItem('token');
+							localStorage.removeItem('username');
+							ca.prompt('退出成功');
+							var aaa=['index.html'];
+							ca.sendNotice(aaa,'update',{});
+							
+							/*
+							 * 注意：
+							 * 1、因本示例应用启动页就是登录页面，因此注册成功后，直接显示登录页即可；
+							 * 2、如果真实案例中，启动页不是登录页，则需修改，使用mui.openWindow打开真实的登录页面
+							 */
+							//plus.webview.getLaunchWebview().show("pop-in");
+							//若启动页不是登录页，则需通过如下方式打开登录页
+								ca.newInterface({
+									url:'index.html'
+								})
+							// mui.openWindow({
+							// 	url: 'login.html',
+							// 	id: 'login',
+							// 	show: {
+							// 		aniShow: 'pop-in'
+							// 	}
+							// });
+							setTimeout(function(){  
+								plus.webview.currentWebview().close();  
+							}, 100)
+							
+							
+							break;
+						case 2:
+							plus.runtime.quit();
+							break;
+					}
+				});
+				}
+			}, false);
+			
+			// logout.addEventListener('tap',function(){
+			// 	localStorage.removeItem('token');
+			// 	localStorage.removeItem('username');
+			// 	ca.prompt('退出成功');
+			// 	
+			// 	var aaa=['index'];
+			// 	ca.sendNotice(aaa,'update',{});
+			// 	
+			// 	ca.newInterface({
+			// 		url:'index.html'
+			// 	})
+			// 	setTimeout(function(){  
+			// 						plus.webview.currentWebview().close();  
+			// 					}, 100)
+			// })
+			
+		</script>
+    </body>
+</html>

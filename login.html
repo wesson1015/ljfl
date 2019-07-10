@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>登录</title>
+        <link rel="stylesheet" href="fonts/iconfont.css"/>
+        <link rel="stylesheet" href="css/font.css"/>
+        <link rel="stylesheet" href="css/mui.css"/>
+        <link rel="stylesheet" href="css/login.css"/>
+		<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <img src="img/logintitle.png" style="width:100%"/>
+        </div>
+		<div class="errmsg" id="errmsg"></div>
+        <div class="login-wrap"> 
+		<div style="text-align: center; font-size: 24px; color: #DA7C0C">用户登陆</div>
+		 <form action="" method="">
+            <div class="login-box">
+                    <div class="input-wrap">
+                        <input type="text" name="username" placeholder="手机号" id="username" value=""/>
+                    </div>
+                    <div class="input-wrap">
+                        <input type="password" name="passwd" placeholder="密码" id="password" value=""/>
+                    </div>
+                    <!-- <div class="input-wrap">
+                        <input type="text" name="vcode" placeholder="验证码" id="vcode"/>
+                        <img src="img/vcode.jpg" class="validate-code" id="code_img">
+                    </div> -->
+                
+            </div>
+			<div class="choose_box">
+			   <span></span><input type="checkbox" checked="checked" name="rember" id="rember"  value="1" style="-webkit-appearance:checkbox;"/>记住密码</span>
+			   <span id="wjmm" style="float:right; color: #0050EF;">忘记密码</span>
+			</div>
+		</form>
+			<div class="btns"></div>
+			<button type="button" class="weui_btn login-btn weui_btn_primary" style="width: 100%; border-style: none;" id="dl">登陆</button>
+            <!-- <a href="javascript:void(0)" onclick="javascript:checklogin()" class="weui_btn login-btn weui_btn_primary">登录</a> -->
+			<div class="nologin">还没有账号？请先<span id="reg"><a href="javascript:;">注册</a><span></div>
+			<div class="contact" id="lxwm"><a href="javascript:;">联系我们</a></div>
+        </div>
+        <div class="footer">
+            Copyright&nbsp;&copy;&nbsp;2019 力威网络科技有限公司&nbsp;
+        </div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/castapp.js"></script>
+		<script>
+			ca.init();
+			var lxwm=ca.id('lxwm');
+			lxwm.addEventListener('tap',function(){
+				ca.newInterface({
+					url:'contact.html',
+					id:'contact'
+				})
+			})
+			var request_url=localStorage.getItem('request_url');
+			var reg=ca.id('reg');
+			reg.addEventListener('tap',function(){
+				ca.newInterface({
+					url:'regist.html',
+					id:'regist'
+				})
+			})
+			var dl = ca.id('dl');
+			var username=ca.id('username');
+			var password=ca.id('password');
+			var re = /^1(3|4|5|6|7|8|9)\d{9}$/; //手机号
+			dl.addEventListener('tap',function(){
+				if(username.value==''){
+					username.focus()
+				ca.prompt('手机号不能为空')
+				// 	errmsg.innerHTML='手机号不能为空';
+					return false;
+				}
+				if(!re.test(username.value)){
+				ca.prompt('手机号输入错误')
+				// 	errmsg.innerHTML='手机号格式错误';
+					return false;
+				}
+				if(password.value==''){
+					ca.prompt('密码不能为空')
+				// 	errmsg.innerHTML='密码不能为空';
+					return false;
+				}
+				//alert(request_url);
+				ca.post({
+					url:request_url+'api/v1/loginyz',
+					data:{
+						username:username.value,
+						password:password.value
+					},
+					succFn:function(data){
+						
+						var json = JSON.parse(data)
+						//console.log(json.data.username)
+						if(json.state<1){
+							ca.prompt('用户名或密码错误');
+							return;
+						}
+						localStorage.setItem('token',json.token);
+						localStorage.setItem('username',json.data.username);
+						ca.prompt('登陆成功')
+						mui.back();
+					}
+				})
+			})
+			var wjmm=ca.id('wjmm');
+			wjmm.addEventListener('tap',function(){
+				ca.newInterface({
+					url:'wjmm.html',
+					id:'wjmm'
+				})
+			})
+		</script>
+    </body>
+</html>
